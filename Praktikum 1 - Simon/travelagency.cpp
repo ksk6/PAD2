@@ -15,7 +15,7 @@ void TravelAgency::readFile()
     quelle.open(path.c_str(), ios::in);
 
     if(!quelle){
-        cerr << path << "konnte nicht geöffnet werden";
+        cerr << "Die Datei " << path << " konnte nicht geöffnet werden";
         exit(-1);
     }else
     {
@@ -86,7 +86,7 @@ void TravelAgency::readBinaryFile()
     quelle.open(path.c_str(), ios::in | ios::binary);
 
     if(!quelle)
-        cout << "Datei konnte nicht geöffnet werden";
+        cout << "Die Datei " << path << " konnte nicht geöffnet werden";
 
     long id;
     double price;
@@ -172,8 +172,8 @@ void TravelAgency::readBinaryFile()
     cout << "Es wurden " << this->flightBookings.size() << " Flugbuchungen mit einem Gesamtwert von " << maxFlightbookingValue <<  " Euro erfasst\n"
          << "Es wurden " << this->rentalCarReservations.size() << " Mietwagenbuchungen mit einem Gesamtwert von " << maxRentalCarReservationValue << " Euro erfasst\n"
          << "Es wurden " << this->hotelBookings.size() << " Hotelbuchungen mit einem Gesamtwert von " << maxHotelBookingsValue <<" Euro erfasst\n";
-    cout << "teuerster Flug " << maxFB.getPrice() << " to " << maxFB.getToDest() << endl;
-    cout << "Teuerste Flugbuchung (Id " << maxFB.getId() << "): Vom " << maxFB.getFromDate() << " bis " << maxFB.getToDate() << " von " << maxFB.getFromDest() <<
+
+    cout << "\nTeuerste Flugbuchung (Id " << maxFB.getId() << "): Vom " << maxFB.getFromDate() << " bis " << maxFB.getToDate() << " von " << maxFB.getFromDest() <<
             " nach " << maxFB.getToDest() << " mit " << maxFB.getAirline() << " zum Preis von " << maxFB.getPrice() << " Euro.\n" << endl <<
             "Teuerste Mietwagenbuchung (Id " << maxRCR.getId() << "): Vom " << maxRCR.getFromDate() << " bis " << maxRCR.getToDate() << " von " << maxRCR.getPickupLocation() <<
             " nach " << maxRCR.getReturnLocation() << " mit " << maxRCR.getCompany() << " zum Preis von " << maxRCR.getPrice() << " Euro.\n" << endl <<

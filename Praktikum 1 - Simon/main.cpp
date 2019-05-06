@@ -4,9 +4,8 @@ int main()
 {
     TravelAgency ta;
     char choice;
-    ta.readBinaryFile();
-    /*do{
-        cout << "Moechten Sie die Binaere-Datei einlesen, druecken Sie b\n"
+    do{
+        cout << "\nMoechten Sie die Binaere-Datei einlesen, druecken Sie b\n"
                 "Moechten Sie die Normale-Datei einlesen, druecken Sie n\n" << endl;
         cin >> choice;
         switch (choice) {
@@ -15,6 +14,5 @@ int main()
         default: cout << "Dies war keine gueltige Eingabe";
         }
     }while(choice == 'b' || choice == 'n');
-*/
     return 0;
 }

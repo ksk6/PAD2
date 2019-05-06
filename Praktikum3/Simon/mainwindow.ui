@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>901</width>
+    <height>566</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTableWidget" name="tWOverview">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>401</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Buchungsnr</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Preis</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Kunde</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Reisenummer</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QWidget" name="wDetailAnsicht" native="true">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>0</y>
+      <width>421</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <widget class="QLineEdit" name="lEBuchungsnummer">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>221</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblBuchungsnummer">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Buchungsnummer</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblVon">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>von</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblBis">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>bis</string>
+     </property>
+    </widget>
+    <widget class="QCalendarWidget" name="cWVon">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>312</width>
+       <height>183</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCalendarWidget" name="cWBis">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>250</y>
+       <width>312</width>
+       <height>183</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>901</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFunktionen">
+    <property name="title">
+     <string>Funktionen</string>
+    </property>
+    <addaction name="actionDatei_einlesen"/>
+    <addaction name="actionProgramm_beenden"/>
+   </widget>
+   <addaction name="menuFunktionen"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionDatei_einlesen">
+   <property name="text">
+    <string>Datei einlesen</string>
+   </property>
+  </action>
+  <action name="actionProgramm_beenden">
+   <property name="text">
+    <string>Programm beenden</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
