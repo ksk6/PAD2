@@ -13,6 +13,10 @@ public:
 
     long getTravelId() const;
 
+    string getFromDate();
+
+    string getToDate();
+
 protected:
     long id, travelId;
     double price;

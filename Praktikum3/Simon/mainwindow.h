@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <travelagency.h>
 
 namespace Ui {
 class MainWindow;
@@ -23,9 +23,12 @@ private slots:
 
     void on_tWOverview_cellDoubleClicked(int row, int column);
 
+    void on_actionNeue_Buchung_anlegen_triggered();
+
 private:
     Ui::MainWindow *ui;
-
+    void ReloadData();
+    TravelAgency* ta;
     enum Zeilen
     {
         Buchungsnummer, Preis, Kunde, Reisenummer

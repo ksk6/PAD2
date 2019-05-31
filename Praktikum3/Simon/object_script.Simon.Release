@@ -8,5 +8,7 @@ INPUT(
 ./release\flightbooking.o
 ./release\customer.o
 ./release\booking.o
+./release\newbooking.o
 ./release\moc_mainwindow.o
+./release\moc_newbooking.o
 );

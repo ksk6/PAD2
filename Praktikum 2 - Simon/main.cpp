@@ -54,7 +54,7 @@ int main()
                 cin >> buffer;
                 bookingDetails.push_back(buffer);
             }
-            ta.createBooking( type,  price,  start,  end,  travelID, bookingDetails);
+
             createbooking = ta.createBooking( type,  price,  start,  end,  travelID, bookingDetails);
 
             if(createbooking == -1)

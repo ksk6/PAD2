@@ -33,7 +33,8 @@ SOURCES += \
     hotelbooking.cpp \
     flightbooking.cpp \
     customer.cpp \
-    booking.cpp
+    booking.cpp \
+    newbooking.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,10 +44,12 @@ HEADERS += \
     hotelbooking.h \
     flightbooking.h \
     customer.h \
-    booking.h
+    booking.h \
+    newbooking.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    newbooking.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

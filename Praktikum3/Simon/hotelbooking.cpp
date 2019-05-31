@@ -4,7 +4,7 @@ HotelBooking::HotelBooking()
 {
 
 }
-HotelBooking::HotelBooking(long id, double price, string fromDate, string toDate, long travelid, string hotel, string town)
+HotelBooking::HotelBooking(long id, double price, string fromDate, string toDate, long travelid, string hotel, string town, bool smoke)
 {
     this->id = id;
     this->price = price;
@@ -13,6 +13,7 @@ HotelBooking::HotelBooking(long id, double price, string fromDate, string toDate
     this->travelId = travelid;
     this->hotel = hotel;
     this->town = town;
+    this->smoke = smoke;
 }
 
 HotelBooking::HotelBooking(double price)

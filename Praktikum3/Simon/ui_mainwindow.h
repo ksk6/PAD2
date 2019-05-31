@@ -31,6 +31,7 @@ class Ui_MainWindow
 public:
     QAction *actionDatei_einlesen;
     QAction *actionProgramm_beenden;
+    QAction *actionNeue_Buchung_anlegen;
     QWidget *centralWidget;
     QTableWidget *tWOverview;
     QWidget *wDetailAnsicht;
@@ -49,11 +50,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(901, 566);
+        MainWindow->resize(870, 566);
         actionDatei_einlesen = new QAction(MainWindow);
         actionDatei_einlesen->setObjectName(QStringLiteral("actionDatei_einlesen"));
         actionProgramm_beenden = new QAction(MainWindow);
         actionProgramm_beenden->setObjectName(QStringLiteral("actionProgramm_beenden"));
+        actionNeue_Buchung_anlegen = new QAction(MainWindow);
+        actionNeue_Buchung_anlegen->setObjectName(QStringLiteral("actionNeue_Buchung_anlegen"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tWOverview = new QTableWidget(centralWidget);
@@ -68,10 +71,11 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tWOverview->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tWOverview->setObjectName(QStringLiteral("tWOverview"));
-        tWOverview->setGeometry(QRect(0, 0, 401, 511));
+        tWOverview->setGeometry(QRect(10, 0, 421, 511));
+        tWOverview->setEditTriggers(QAbstractItemView::DoubleClicked);
         wDetailAnsicht = new QWidget(centralWidget);
         wDetailAnsicht->setObjectName(QStringLiteral("wDetailAnsicht"));
-        wDetailAnsicht->setGeometry(QRect(410, 0, 421, 511));
+        wDetailAnsicht->setGeometry(QRect(430, 0, 421, 511));
         lEBuchungsnummer = new QLineEdit(wDetailAnsicht);
         lEBuchungsnummer->setObjectName(QStringLiteral("lEBuchungsnummer"));
         lEBuchungsnummer->setEnabled(false);
@@ -94,7 +98,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 901, 21));
+        menuBar->setGeometry(QRect(0, 0, 870, 21));
         menuFunktionen = new QMenu(menuBar);
         menuFunktionen->setObjectName(QStringLiteral("menuFunktionen"));
         MainWindow->setMenuBar(menuBar);
@@ -108,6 +112,7 @@ public:
         menuBar->addAction(menuFunktionen->menuAction());
         menuFunktionen->addAction(actionDatei_einlesen);
         menuFunktionen->addAction(actionProgramm_beenden);
+        menuFunktionen->addAction(actionNeue_Buchung_anlegen);
 
         retranslateUi(MainWindow);
 
@@ -119,6 +124,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionDatei_einlesen->setText(QApplication::translate("MainWindow", "Datei einlesen", nullptr));
         actionProgramm_beenden->setText(QApplication::translate("MainWindow", "Programm beenden", nullptr));
+        actionNeue_Buchung_anlegen->setText(QApplication::translate("MainWindow", "Neue Buchung anlegen", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tWOverview->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "Buchungsnr", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tWOverview->horizontalHeaderItem(1);

@@ -18,6 +18,32 @@ int TravelAgency::GenerateNewID(){
     return newID;
 }
 
+Booking* TravelAgency::findBooking(long id){
+    for(Booking *b : this->allBooking)
+    {
+        if(b->getId() == id)
+            return b;
+    }
+    return nullptr;
+}
+
+Travel* TravelAgency::findTravel(long id){
+    for(Travel *t : this->allTravels)
+    {
+        if(t->getId() == id)
+            return t;
+    }
+    return nullptr;
+}
+
+Customer* TravelAgency::findCustomer(long id){
+    for(Customer *c : this->allCustomers)
+    {
+        if(c->getId() == id)
+            return c;
+    }
+    return nullptr;
+}
 double TravelAgency::getTotalPrice() const
 {
     return totalPrice;
@@ -115,28 +141,27 @@ void TravelAgency::readFile()
 
             if(s.at(0) == 'F')
             {
-
-                //FlightBooking fb(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10));
-                //maxFlightbookingValue += fb.getPrice();
                 numberOfFlights++;
-                this->allBooking.push_back(new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10)));
+                //FlightBooking::FlightBooking(long id, double price, string fromDate, string toDate, long travelID, string fromDest, string toDest, string airline, char seatPref){
+                this->allBooking.push_back(new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                             linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8),
+                                                             linedata.at(9), linedata.at(10), linedata.at(11).at(0)));
             }
             else if(s.at(0) == 'R')
             {
-
-                //RentalCarReservation RcR(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10));
-                //maxRentalCarReservationValue += RcR.getPrice();
                 numberOfRentalCarReservation++;
-                this->allBooking.push_back(new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10)));
+                this->allBooking.push_back(new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                                    linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                                    linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11)));
             }else if(s.at(0) == 'H')
             {
-                //HotelBooking hb(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9));
-                //maxHotelBookingsValue += hb.getPrice();
                 numberOfHotelBookings++;
-                this->allBooking.push_back(new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9)));
+                this->allBooking.push_back(new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                            linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                            linedata.at(8), linedata.at(9), stoi(linedata.at(10))));
             }
-            Customer cus;
             //Überprüfe ob Customer vorhanden
+            Customer cus;
             bool cusExists = false;
             for(Customer *c : this->allCustomers)
             {
@@ -171,18 +196,17 @@ void TravelAgency::readFile()
         }
         //Ordne allen Travels ihre Bookings zu
         //Gesamtpreisberechnen
-        unsigned int numberOfBookingsOfTrav17 = 0;
         for(Travel *t : this->allTravels)
         {
             for(Booking *b : this->allBooking)
             {
-                totalPrice += b->getPrice();
-                if(b->getTravelId() == t->getId())
+                if(b->getTravelId() == t->getId()){
+                    totalPrice += b->getPrice();
                     t->addBooking(b);
+                }
             }
         }
 
-        unsigned int numberOfTravelsOfCus1 = 0;
         //Loop durch cus für jeden Cus suche Travel
         for(Customer *c : this->allCustomers)
         {
@@ -192,34 +216,6 @@ void TravelAgency::readFile()
                     c->addTravel(t);
             }
         }
-
-        for(Customer *c : this->allCustomers)
-        {
-            if(c->getId() == 1)
-                numberOfTravelsOfCus1 = c->getTravelList().size();
-        }
-
-        for(Travel *t : this->allTravels)
-        {
-            if(t->getId() == 17)
-                numberOfBookingsOfTrav17 = t->getTravelBookings().size();
-        }
-
-        cout << "Es wurden " << numberOfFlights << " Flugbuchungen, " << numberOfRentalCarReservation << " Mietwagenbuchungen und " << numberOfHotelBookings << " Hotelbuchungen mit einem Gesamtwert von " << long(totalPrice)<< " Euro erfasst\n";
-        cout << "----------------------------------- Alle Reisen -----------------------------" << endl;
-        for(Travel *t : this->allTravels)
-        {
-            cout << "Reisenr.: " << t->getId() << " vom Kunden mit der ID " << t->getCustomerID() << " beinhaltet " << t->getTravelBookings().size() << " Buchungen" << endl;
-        }
-
-        cout << "----------------------------------- Alle Kunden -----------------------------" << endl;
-        for(Customer *c : this->allCustomers)
-        {
-            cout << c->getName() << " hat die ID " << c->getId() << " und hat " << c->getTravelList().size() << " Reisen gebucht " << endl;
-        }
-        cout << "Der Kunde mit der ID 1 hat " << numberOfTravelsOfCus1 << " Reisen gebucht" << endl;
-        cout << "Die Reise mit der ID 17 hat " << numberOfBookingsOfTrav17 << " Buchungen" << endl;
-
     }
     quelle.close();
 }

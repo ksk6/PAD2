@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>901</width>
+    <width>870</width>
     <height>566</height>
    </rect>
   </property>
@@ -17,11 +17,14 @@
    <widget class="QTableWidget" name="tWOverview">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
-      <width>401</width>
+      <width>421</width>
       <height>511</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
     </property>
     <column>
      <property name="text">
@@ -47,7 +50,7 @@
    <widget class="QWidget" name="wDetailAnsicht" native="true">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>430</x>
       <y>0</y>
       <width>421</width>
       <height>511</height>
@@ -132,7 +135,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>901</width>
+     <width>870</width>
      <height>21</height>
     </rect>
    </property>
@@ -142,6 +145,7 @@
     </property>
     <addaction name="actionDatei_einlesen"/>
     <addaction name="actionProgramm_beenden"/>
+    <addaction name="actionNeue_Buchung_anlegen"/>
    </widget>
    <addaction name="menuFunktionen"/>
   </widget>
@@ -162,6 +166,11 @@
   <action name="actionProgramm_beenden">
    <property name="text">
     <string>Programm beenden</string>
+   </property>
+  </action>
+  <action name="actionNeue_Buchung_anlegen">
+   <property name="text">
+    <string>Neue Buchung anlegen</string>
    </property>
   </action>
  </widget>

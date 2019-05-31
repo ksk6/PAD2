@@ -20,4 +20,14 @@ long Booking::getTravelId() const
     return travelId;
 }
 
+string Booking::getFromDate()
+{
+    return this->fromDate;
+}
+
+string Booking::getToDate()
+{
+    return this->toDate;
+}
+
 

@@ -8,5 +8,7 @@ INPUT(
 ./debug\flightbooking.o
 ./debug\customer.o
 ./debug\booking.o
+./debug\newbooking.o
 ./debug\moc_mainwindow.o
+./debug\moc_newbooking.o
 );

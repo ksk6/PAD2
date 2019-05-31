@@ -2,6 +2,7 @@
 #include <sstream>
 #include <booking.h>
 #include <flightbooking.h>
+#include <iomanip>
 
 TravelAgency::TravelAgency()
 {
@@ -95,23 +96,15 @@ void TravelAgency::readFile()
 
             if(s.at(0) == 'F')
             {
-
-                //FlightBooking fb(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10));
-                //maxFlightbookingValue += fb.getPrice();
                 numberOfFlights++;
                 this->allBooking.push_back(new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10)));
             }
             else if(s.at(0) == 'R')
             {
-
-                //RentalCarReservation RcR(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10));
-                //maxRentalCarReservationValue += RcR.getPrice();
                 numberOfRentalCarReservation++;
                 this->allBooking.push_back(new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9), linedata.at(10)));
             }else if(s.at(0) == 'H')
             {
-                //HotelBooking hb(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9));
-                //maxHotelBookingsValue += hb.getPrice();
                 numberOfHotelBookings++;
                 this->allBooking.push_back(new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()), linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8), linedata.at(9)));
             }
@@ -152,13 +145,16 @@ void TravelAgency::readFile()
         //Ordne allen Travels ihre Bookings zu
         //Gesamtpreisberechnen
         unsigned int numberOfBookingsOfTrav17 = 0;
+        totalPrice = 0.0;
         for(Travel *t : this->allTravels)
         {
             for(Booking *b : this->allBooking)
             {
-                totalPrice += b->getPrice();
                 if(b->getTravelId() == t->getId())
+                {
                     t->addBooking(b);
+                    totalPrice += b->getPrice();
+                }
             }
         }
 
@@ -184,8 +180,8 @@ void TravelAgency::readFile()
             if(t->getId() == 17)
                 numberOfBookingsOfTrav17 = t->getTravelBookings().size();
         }
-
-        cout << "Es wurden " << numberOfFlights << " Flugbuchungen, " << numberOfRentalCarReservation << " Mietwagenbuchungen und " << numberOfHotelBookings << " Hotelbuchungen mit einem Gesamtwert von " << long(totalPrice)<< " Euro erfasst\n";
+        //totalPrice = CalculateTotal();
+        cout << "Es wurden " << numberOfFlights << " Flugbuchungen, " << numberOfRentalCarReservation << " Mietwagenbuchungen und " << numberOfHotelBookings << " Hotelbuchungen mit einem Gesamtwert von " << totalPrice << " Euro erfasst\n";
         cout << "----------------------------------- Alle Reisen -----------------------------" << endl;
         for(Travel *t : this->allTravels)
         {
@@ -197,7 +193,10 @@ void TravelAgency::readFile()
         {
             cout << c->getName() << " hat die ID " << c->getId() << " und hat " << c->getTravelList().size() << " Reisen gebucht " << endl;
         }
+
+        cout << "----------------------------------- Kunden mit der ID 1 -----------------------------" << endl;
         cout << "Der Kunde mit der ID 1 hat " << numberOfTravelsOfCus1 << " Reisen gebucht" << endl;
+        cout << "----------------------------------- Reise mit der ID 17 -----------------------------" << endl;
         cout << "Die Reise mit der ID 17 hat " << numberOfBookingsOfTrav17 << " Buchungen" << endl;
 
     }
