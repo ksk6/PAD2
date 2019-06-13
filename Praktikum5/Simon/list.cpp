@@ -2,23 +2,31 @@
 #include <stdexcept>
 using namespace std;
 
-List::List() {
+List<Booking*>::List() {
     root = nullptr; // root darf nur bei einer leeren Liste gleich NULL sein
     end = new Node(nullptr);  // Dummyknoten
     cursor = end;
 }
 
-Booking* List::operator[](int i){
+Booking* List<Booking*>::operator[](int i){
     if( i < 0 || unsigned(i)>= this->numElements)
         throw out_of_range("Indexüberschreitung!");
     return this->getNode();
 }
 
-void List::insertNode(Booking *b) {
+void List<Booking*>::insertNode(Booking *b) {
 
     Node* node = new Node(b); // erzeuge neuen Knoten, bei dem vorhergehender
     // und nachfolgender Knoten per Default auf NULL
     // gesetzt sind (siehe Konstruktor von node)
+
+    do{
+        if(cursor->GetData()->getId()>node->GetData()->getId())
+            cursor = cursor->GetPreviousNode();
+        else
+            break;
+
+    }while(true);
 
     if (root == nullptr) {
         // Leere Liste: Der root-Knoten wird auf den neuen Knoten umgesetzt und der
@@ -53,7 +61,7 @@ void List::insertNode(Booking *b) {
         root = cursor;
 }
 
-void List::deleteNode() {
+void List<Booking*>::deleteNode() {
     Node* tmpPrevious; // temporaere Variablen, fuer den Fall, dass der
     Node* tmpNext;     // zu loeschende Knoten in der Mitte der Liste ist
 

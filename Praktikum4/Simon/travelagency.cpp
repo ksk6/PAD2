@@ -201,6 +201,7 @@ bool TravelAgency::readFile()
                     trav = *this->allTravels.at(this->allTravels.size()-1);
                 }
                 counter++;
+
             } catch(const std::exception& e){
                 for(Booking *b : this->allBooking){
                     delete b;
@@ -214,32 +215,33 @@ bool TravelAgency::readFile()
                 return false;
             }
         }
-        //Ordne allen Travels ihre Bookings zu
-        //Gesamtpreisberechnen
-        for(Travel *t : this->allTravels)
+    }
+    //Ordne allen Travels ihre Bookings zu
+    //Gesamtpreisberechnen
+    for(Travel *t : this->allTravels)
+    {
+        for(Booking *b : this->allBooking)
         {
-            for(Booking *b : this->allBooking)
-            {
-                if(b->getTravelId() == t->getId()){
-                    totalPrice += b->getPrice();
-                    t->addBooking(b);
-                }
-            }
-        }
-
-        //Loop durch cus für jeden Cus suche Travel
-        for(Customer *c : this->allCustomers)
-        {
-            for(Travel *t : this->allTravels)
-            {
-                if(t->getCustomerID() == c->getId())
-                    c->addTravel(t);
+            if(b->getTravelId() == t->getId()){
+                totalPrice += b->getPrice();
+                t->addBooking(b);
             }
         }
     }
-    quelle.close();
-    return true;
+
+    //Loop durch cus für jeden Cus suche Travel
+    for(Customer *c : this->allCustomers)
+    {
+        for(Travel *t : this->allTravels)
+        {
+            if(t->getCustomerID() == c->getId())
+                c->addTravel(t);
+        }
+    }
 }
+quelle.close();
+return true;
+}}
 
 void TravelAgency::writeFile(QString targetName){
     /*ofstream targetFile;

@@ -10,6 +10,7 @@ INPUT(
 ./debug\booking.o
 ./debug\newbooking.o
 ./debug\test.o
+./debug\list.o
 ./debug\moc_mainwindow.o
 ./debug\moc_newbooking.o
 ./debug\moc_test.o

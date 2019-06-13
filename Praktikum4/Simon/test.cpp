@@ -32,9 +32,11 @@ void Test::testUnitedAirlines(){
 void Test::testValue(){
     TravelAgency t;
     t.readFile();
-    int counter = 0;
-
-    QCOMPARE(t.getAllBooking().size(), 31);
-    QVERIFY(t.getTotalPrice() > 1000 );
+    double price = 0;
+    for(unsigned int i=0; i<= 30; i++)
+    {
+        price = t.getAllBooking().at(i)->getPrice();
+    }
+    QVERIFY(price > 1000 );
 }
 

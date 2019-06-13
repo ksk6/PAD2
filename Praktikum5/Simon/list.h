@@ -45,11 +45,11 @@ public:
     }
 
     //Operatorüberladung
-    Booking* operator[](int i);
-    int& size();
-    //Booking* operatorat()(int i);
-    //Booking* operator.at()
-    //List operator at
+    Booking* operator[](unsigned int i);
+    Booking* at(unsigned int i);
+
+    unsigned int  size();
+
 
 
 
