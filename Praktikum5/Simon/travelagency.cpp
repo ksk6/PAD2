@@ -14,19 +14,19 @@ TravelAgency::TravelAgency()
 
 int TravelAgency::GenerateNewID(){
     int newID = 0;
-    for(Booking *b : this->allBooking){
-        if(b->getId() > newID)
-            newID = b->getId();
+    for(unsigned int i=0; i<= this->allBooking.size(); i++){
+    //for(Booking *b : this->allBooking){
+        if(this->allBooking.at(i)->getId() > newID)
+            newID = this->allBooking.at(i)->getId();
     }
     newID++;
     return newID;
 }
 
 Booking* TravelAgency::findBooking(long id){
-    for(Booking *b : this->allBooking)
-    {
-        if(b->getId() == id)
-            return b;
+    for(unsigned int i=0; i<= this->allBooking.size(); i++){
+        if(this->allBooking.at(i)->getId() == id)
+            return this->allBooking.at(i);
     }
     return nullptr;
 }
@@ -205,7 +205,7 @@ bool TravelAgency::readFile()
                 counter++;
 
             } catch(const std::exception& e){
-                for(int i = 0; i<int(allBooking.numElements); i++)
+                for(unsigned int i = 0; i<this->allBooking.size(); i++)
                 {
                    allBooking[i]->~Booking(); // Nicht sicher ob das funktioniert
                    //allBooking.deleteNode();
@@ -229,11 +229,11 @@ bool TravelAgency::readFile()
         //Gesamtpreisberechnen
         for(Travel *t : this->allTravels)
         {
-            for(Booking *b : this->getAllBooking())
+            for(unsigned int i=0; i<=this->allBooking.size();i++)
             {
-                if(b->getTravelId() == t->getId()){
-                    totalPrice += b->getPrice();
-                    t->addBooking(b);
+                if(this->allBooking.at(i)->getTravelId() == t->getId()){
+                    totalPrice += this->allBooking.at(i)->getPrice();
+                    t->addBooking(this->allBooking.at(i));
                 }
             }
         }
@@ -266,24 +266,24 @@ void TravelAgency::writeFile(QString targetName){
     {
         QTextStream data(&targetFile);
         string line;
-        for(Booking* b : this->allBooking)
+        for(unsigned int i=0; i<= this->allBooking.size(); i++)
         {
-            Travel *t = this->findTravel(b->getTravelId());
+            Travel *t = this->findTravel(this->allBooking.at(i)->getTravelId());
             Customer *c = this->findCustomer(t->getCustomerID());
-            if(b->getType() == 'F'){
-                FlightBooking* f = dynamic_cast<FlightBooking*>(b);
+            if(this->allBooking.at(i)->getType() == 'F'){
+                FlightBooking* f = dynamic_cast<FlightBooking*>(this->allBooking.at(i));
                 line = "F|" + to_string(f->getId()) + "|" + to_string(f->getPrice())
                         + "|" + f->getFromDate() + "|" + f->getToDate() + "|" + to_string(f->getTravelId()) + "|" +
                         to_string(c->getId()) + "|" + c->getName() + "|" + f->getFromDest() + "|" + f->getToDest()
                         + "|" + f->getAirline() + "|" + to_string(f->getSeatPref()) + "\n";
-            }else if(b->getType() == 'R'){
-                RentalCarReservation* r = dynamic_cast<RentalCarReservation*>(b);
+            }else if(this->allBooking.at(i)->getType() == 'R'){
+                RentalCarReservation* r = dynamic_cast<RentalCarReservation*>(this->allBooking.at(i));
                 line = "R|" + to_string(r->getId()) + "|" + to_string(r->getPrice())
                         + "|" + r->getFromDate() + "|" + r->getToDate() + "|" + to_string(r->getTravelId()) + "|" +
                         to_string(c->getId()) + "|" + c->getName() + "|" + r->getPickupLocation() + "|" + r->getReturnLocation()
                         + "|" + r->getCompany() + "|" + r->getInsuranceType() + "\n";
-            }else if(b->getType() == 'H'){
-                HotelBooking* h = dynamic_cast<HotelBooking*>(b);
+            }else if(this->allBooking.at(i)->getType() == 'H'){
+                HotelBooking* h = dynamic_cast<HotelBooking*>(this->allBooking.at(i));
                 line = "H|" + to_string(h->getId()) + "|" + to_string(h->getPrice())
                         + "|" + h->getFromDate() + "|" + h->getToDate() + "|" + to_string(h->getTravelId()) + "|" +
                         to_string(c->getId()) + "|" + c->getName() + "|" + h->getHotel() + "|" + h->getTown()

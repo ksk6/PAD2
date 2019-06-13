@@ -8,10 +8,30 @@ List<Booking*>::List() {
     cursor = end;
 }
 
-Booking* List<Booking*>::operator[](int i){
+Booking* List<Booking*>::operator[](unsigned int i){
     if( i < 0 || unsigned(i)>= this->numElements)
         throw out_of_range("Indexüberschreitung!");
-    return this->getNode();
+
+    Node* node = root;
+    for(unsigned int y = 0; y<=i; y++){
+        node = node->GetNextNode();
+    }
+    return node->GetData();
+}
+
+Booking* List<Booking*>::at(unsigned int i){
+    if( i < 0 || unsigned(i)>= this->numElements)
+        throw out_of_range("Indexüberschreitung!");
+
+    Node* node = root;
+    for(unsigned int y = 0; y<=i; y++){
+        node = node->GetNextNode();
+    }
+    return node->GetData();
+}
+
+unsigned int List<Booking*>::size(){
+    return this->numElements;
 }
 
 void List<Booking*>::insertNode(Booking *b) {
