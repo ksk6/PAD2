@@ -101,7 +101,7 @@ bool TravelAgency::readFile()
 {
     ifstream quelle;
     string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/booking.txt";
-    //string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/bookings_praktikum4.txt";
+    //string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/booking.txt";
 
     quelle.open(path.c_str(), ios::in);
 

@@ -37,7 +37,8 @@ SOURCES += \
     newbooking.cpp \
     test.cpp \
     node.cpp \
-    list.cpp
+    list.cpp \
+    graph.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +52,8 @@ HEADERS += \
     newbooking.h \
     test.h \
     node.h \
-    list.h
+    list.h \
+    graph.h
 
 FORMS += \
         mainwindow.ui \
