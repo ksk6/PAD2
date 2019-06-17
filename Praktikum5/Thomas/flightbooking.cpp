@@ -4,7 +4,7 @@ FlightBooking::FlightBooking()
 {
 
 }
-FlightBooking::FlightBooking(long id, double price, string fromDate, string toDate, long travelID, string fromDest, string toDest, string airline, char seatPref){
+FlightBooking::FlightBooking(long id, double price, string fromDate, string toDate, long travelID, string fromDest, string toDest, string airline, char seatPref, vector<int> vorherigeBuchungen){
     this->type = 'F';
     this->id = id;
     this->price = price;
@@ -15,6 +15,7 @@ FlightBooking::FlightBooking(long id, double price, string fromDate, string toDa
     this->toDest = toDest;
     this->airline = airline;
     this->seatPref = seatPref;
+    this->vorherigeBuchungen = vorherigeBuchungen;
 }
 
 FlightBooking::~FlightBooking()

@@ -1,4 +1,6 @@
 #include "travelagency.h"
+#include "graph.h"
+#include "list.h"
 #include <sstream>
 #include <booking.h>
 #include <flightbooking.h>
@@ -76,21 +78,30 @@ int TravelAgency::createBooking( char type, double price, string start, string e
     {
         return -1;
     }else{
+        vector<int> vorherigeBuchungen = {}; // TODO: Per GUI erfragen
         this->totalPrice += price;
         int id = GenerateNewID();
         if(type == 'F')
         {
-            this->allBooking.InsertNode(new FlightBooking(id, price, start, end, travelID, bookingDetails.at(0), bookingDetails.at(1), bookingDetails.at(2), bookingDetails.at(3).at(0)));
+            this->allBooking.InsertNode(new FlightBooking(id, price, start, end, travelID,
+                                                          bookingDetails.at(0), bookingDetails.at(1),
+                                                          bookingDetails.at(2), bookingDetails.at(3).at(0),
+                                                          vorherigeBuchungen));
             this->numberOfFlights++;
         }else if(type == 'H'){
             if(bookingDetails.at(2) == "true")
                 smoke = true;
             else
                 smoke = false;
-            this->allBooking.InsertNode(new HotelBooking(id, price, start, end, travelID, bookingDetails.at(0), bookingDetails.at(1), smoke));
+            this->allBooking.InsertNode(new HotelBooking(id, price, start, end, travelID,
+                                                         bookingDetails.at(0), bookingDetails.at(1),
+                                                         smoke, vorherigeBuchungen));
             this->numberOfHotelBookings++;
         }else if(type == 'R'){
-            this->allBooking.InsertNode(new RentalCarReservation(id, price, start, end, travelID, bookingDetails.at(0), bookingDetails.at(1), bookingDetails.at(2), bookingDetails.at(3)));
+            this->allBooking.InsertNode(new RentalCarReservation(id, price, start, end, travelID,
+                                                                 bookingDetails.at(0), bookingDetails.at(1),
+                                                                 bookingDetails.at(2), bookingDetails.at(3),
+                                                                 vorherigeBuchungen));
             this->numberOfRentalCarReservation++;
         }
         return id;
@@ -100,51 +111,81 @@ int TravelAgency::createBooking( char type, double price, string start, string e
 bool TravelAgency::readFile()
 {
     ifstream quelle;
-    string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/booking.txt";
-    //string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/booking.txt";
+    string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum5/Thomas/bookings_praktikum5.txt";
+    //string path = "C:/Users/thomas.trautwein/Desktop/PAD2-master/Praktikum4/Thomas/bookings_praktikum4.txt";
 
     quelle.open(path.c_str(), ios::in);
 
     if(!quelle){
         cerr << "Die Datei " << path << " konnte nicht geöffnet werden";
         exit(-1);
-    }else
-    {
+    }else{
         string s,s2;
         int counter = 1;
+
+        // Neuen Graph anlegen
+        const int nBuchungen = 200;
+        Graph<FlightBooking, nBuchungen>* graph = new Graph<FlightBooking, nBuchungen>;
+
         while(getline(quelle, s, '\n')){
             stringstream ss(s);
+
+            vector<int> vorherigeBuchungen = {};
+            bool hasVorherigeBuchungen = false;
+            unsigned int numNormalAttrs;
+            switch (s.at(0)) {
+                case 'F': numNormalAttrs = 12; break;
+                case 'R': numNormalAttrs = 12; break;
+                case 'H': numNormalAttrs = 13; break;
+                default: throw runtime_error("Buchungsart ist nicht definiert");
+            }
+
             try{
                 vector<string> linedata;
                 while(getline(ss, s2, '|')){
-                    if(s2 == "")
-                    {
-                        throw runtime_error("Ein Attribut ist leer");
-                    }
-                    linedata.push_back(s2);
 
+                    // Normale Attribute hinzufügen
+                    if(linedata.size() <= numNormalAttrs && s2 != ""){ linedata.push_back(s2); }
+
+                    // Vorgaenger Buchungen hinzufügen
+                    else if(linedata.size() > numNormalAttrs){ hasVorherigeBuchungen = true; break; }
+
+                    // Wenn ein normales Attribut leer ist
+                    else{ throw runtime_error("Ein Attribut ist leer"); }
                 }
 
+                // Vorgaenger Buchungen hinzufügen
+                if(hasVorherigeBuchungen){
+                    while(getline(ss, s2, '|')){
+                        if(s2 == ""){ break; }
+                        vorherigeBuchungen.push_back(stoi(s2));
+                    }
+                }
 
                 if(s.at(0) == 'F')
                 {
+                    FlightBooking* f = new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                        linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8),
+                                                        linedata.at(9), linedata.at(10), linedata.at(11).at(0), vorherigeBuchungen);
+
                     numberOfFlights++;
-                    this->allBooking.InsertNode(new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
-                                                                 linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8),
-                                                                 linedata.at(9), linedata.at(10), linedata.at(11).at(0)));
+                    this->allBooking.InsertNode(f);
+                    graph->insertVertex(f->getId(), *f);
                 }
                 else if(s.at(0) == 'R')
                 {
                     numberOfRentalCarReservation++;
                     this->allBooking.InsertNode(new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
-                                                                        linedata.at(3), linedata.at(4), stol(linedata.at(5)),
-                                                                        linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11)));
+                                                                         linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                                         linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11),
+                                                                         vorherigeBuchungen));
                 }else if(s.at(0) == 'H')
                 {
                     numberOfHotelBookings++;
                     this->allBooking.InsertNode(new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
-                                                                linedata.at(3), linedata.at(4), stol(linedata.at(5)),
-                                                                linedata.at(8), linedata.at(9), stoi(linedata.at(10))));
+                                                                 linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                                 linedata.at(8), linedata.at(9), stoi(linedata.at(10)),
+                                                                 vorherigeBuchungen));
                 }
 
                 //Überprüfe ob Customer vorhanden

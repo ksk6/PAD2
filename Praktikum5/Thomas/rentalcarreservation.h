@@ -7,7 +7,8 @@ class RentalCarReservation : public Booking
 public:
     RentalCarReservation();
     RentalCarReservation(long id, double price, string fromDate, string toDate, long travelid,
-                         string pickupLocation, string returnLocation, string company, string insuranceType);
+                         string pickupLocation, string returnLocation, string company, string insuranceType,
+                         vector<int> vorherigeBuchungen);
     RentalCarReservation(double price);
     ~RentalCarReservation();
     string showDetails();

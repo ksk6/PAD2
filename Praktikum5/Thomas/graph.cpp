@@ -136,6 +136,14 @@ void Graph<T, maxNodes>::insertVertex(int n, T m) {
 }
 
 template <class T, int maxNodes>
+void Graph<T, maxNodes>::insertVertex(int n, T*m) {
+    if (n >= 0 && n < maxNodes) {
+        vertices[n].living = true;
+        vertices[n].value = m;
+    }
+}
+
+template <class T, int maxNodes>
 int Graph<T, maxNodes>::firstVertex() {
     for (int i = 0; i < maxNodes; i++)
         if (vertices[i].living == true)

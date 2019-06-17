@@ -1,6 +1,7 @@
 #ifndef BOOKING_H
 #define BOOKING_H
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Booking
@@ -24,6 +25,7 @@ protected:
     char type;
     double price;
     string fromDate, toDate;
+    vector<int> vorherigeBuchungen;
 };
 
 #endif // BOOKING_H

@@ -6,7 +6,8 @@ RentalCarReservation::RentalCarReservation()
 }
 
 RentalCarReservation::RentalCarReservation(long id, double price, string fromDate, string toDate, long travelid,
-                                           string pickupLocation, string returnLocation, string company, string insuranceType)
+                                           string pickupLocation, string returnLocation, string company, string insuranceType,
+                                           vector<int> vorherigeBuchungen)
 {
     this->type = 'R';
     this->id = id;
@@ -18,6 +19,7 @@ RentalCarReservation::RentalCarReservation(long id, double price, string fromDat
     this->returnLocation = returnLocation;
     this->company = company;
     this->insuranceType = insuranceType;
+    this->vorherigeBuchungen = vorherigeBuchungen;
 }
 RentalCarReservation::RentalCarReservation(double price){
     this->price = price;

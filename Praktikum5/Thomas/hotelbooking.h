@@ -6,7 +6,9 @@ class HotelBooking : public Booking
 {
 public:
     HotelBooking();
-    HotelBooking(long id, double price, string fromDate, string toDate, long travelid, string hotel, string town, bool smoke);
+    HotelBooking(long id, double price, string fromDate, string toDate,
+                 long travelid, string hotel, string town, bool smoke,
+                 vector<int> vorherigeBuchungen);
     HotelBooking(double price);
     ~HotelBooking();
     string showDetails();

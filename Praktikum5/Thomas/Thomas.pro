@@ -38,7 +38,7 @@ SOURCES += \
     test.cpp \
     node.cpp \
     list.cpp \
-    graph.cpp
+    algorithmen.cpp
 
 HEADERS += \
         mainwindow.h \

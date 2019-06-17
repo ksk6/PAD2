@@ -7,7 +7,7 @@ class FlightBooking : public Booking
 public:
     FlightBooking();
     FlightBooking(long id, double price, string fromDate, string toDate, long travelID, string fromDest,
-                  string toDest, string airline, char seatPref);
+                  string toDest, string airline, char seatPref, vector<int> vorherigeBuchungen);
     FlightBooking(double price);
     virtual ~FlightBooking();
     string showDetails();
