@@ -99,7 +99,7 @@ void Graph<TV, maxNodes>::insertVertex(int n, TV m) {
     if (n >= 0 && n < maxNodes) {
         vertices[n].living = true;
         vertices[n].value = m;
-        numVertices = 1;
+        numVertices++;
     }
 }
 
@@ -326,9 +326,11 @@ void Graph<TV, maxNodes>::printVertex(int n) {
         else
             color = "BLACK";
     }
-    cout << "Nummer: " << n << " Wert: " << getVertexValue(n) << " Ordnung: " << getOrd(n)
-         << " Farbe: " << setw(6) << color << " Start: " << getStart(n) << " Ende: " << getEnd(n)
-         << " Vorgaenger: " << getPredecessor(n) << endl;
+    if(getVertexValue(n)){
+        cout << "Nummer: " << n << " Wert: " << getVertexValue(n) << " Ordnung: " << getOrd(n)
+             << " Farbe: " << setw(6) << color << " Start: " << getStart(n) << " Ende: " << getEnd(n)
+             << " Vorgaenger: " << getPredecessor(n) << endl;
+    }
 }
 
 template <class TV, int maxNodes>

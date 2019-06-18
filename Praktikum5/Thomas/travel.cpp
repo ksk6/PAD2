@@ -29,10 +29,66 @@ void Travel::addBooking(Booking* booking){
     this->travelBookings.push_back(booking);
 }
 
+
 void Travel::addKnoten(int dataID, DataConverter *data, vector<int> vorherigeBuchungen){
     graph->insertVertex(dataID, data);
 
     if(vorherigeBuchungen.size() > 0){
-        for(int id : vorherigeBuchungen){ graph->insertArc(dataID, id); }
+        for(int id : vorherigeBuchungen){
+            graph->insertArc(dataID, id);
+        }
     }
+
+    graph->printVertices();
+}
+
+
+
+void Travel::topologischSortieren(){
+    DepthFirstSearch(*graph);
+    vector<node_data> ndata = vector<node_data>();
+
+    for (int i = 0; i < 200; i++) {
+
+        DataConverter* ddata = graph->getVertexValue(i);
+        string bezeichner = "";
+
+        if(ddata != nullptr){
+            switch (ddata->bookingArt) {
+                case BookingArt::FLIGHT: bezeichner = to_string(ddata->fData->getId()); break;
+                case BookingArt::HOTEL: bezeichner = to_string(ddata->hData->getId()); break;
+                case BookingArt::CAR: bezeichner = to_string(ddata->rData->getId()); break;
+            }
+        }
+
+        if(bezeichner != ""){
+            node_data node = node_data();
+            node.i = stoi(bezeichner); //i
+            node.bezeichner = bezeichner;
+            node.end = graph->getEnd(i);
+            ndata.push_back(node);
+            //sortedArray[i].i = i;
+            //sortedArray[i].bezeichner = bezeichner;
+            //sortedArray[i].end = graph->getEnd(i);
+        }
+    }
+
+    int a = 0;
+    //Heap heap = Heap(sortedArray, 200);
+}
+
+bool Travel::checkRoundtrip(){
+
+}
+
+bool Travel::checkMissingHotel(){
+
+}
+
+bool Travel::checkNeedlessHotel(){
+
+}
+
+bool Travel::checkNeedlessRentalCar(){
+
 }

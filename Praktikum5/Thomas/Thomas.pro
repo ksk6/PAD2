@@ -39,7 +39,8 @@ SOURCES += \
     node.cpp \
     list.cpp \
     algorithmen.cpp \
-    dataconverter.cpp
+    dataconverter.cpp \
+    heap.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,7 +56,8 @@ HEADERS += \
     node.h \
     list.h \
     graph.h \
-    dataconverter.h
+    dataconverter.h \
+    heap.h
 
 FORMS += \
         mainwindow.ui \

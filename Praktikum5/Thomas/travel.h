@@ -1,10 +1,11 @@
 #ifndef TRAVEL_H
 #define TRAVEL_H
+#include "algorithmen.cpp"
 #include <booking.h>
 #include <dataconverter.h>
 #include <graph.h>
+#include <heap.h>
 #include <vector>
-
 
 class Travel
 {
@@ -27,10 +28,17 @@ public:
 
     void addKnoten(int dataID, DataConverter* data, vector<int> vorherigeBuchungen);
 
+    void topologischSortieren();
+    bool checkRoundtrip();
+    bool checkMissingHotel();
+    bool checkNeedlessHotel();
+    bool checkNeedlessRentalCar();
+
 private:
     long id, customerID;
     vector<Booking*> travelBookings;
     Graph<DataConverter*, 200>* graph;
+    node_data sortedArray[200];
 };
 
 #endif // TRAVEL_H

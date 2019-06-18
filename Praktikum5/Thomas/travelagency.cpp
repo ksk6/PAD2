@@ -239,6 +239,8 @@ bool TravelAgency::readFile()
         //Ordne allen Travels ihre Bookings zu Gesamtpreisberechnen
         for(Travel *t : this->allTravels)
         {
+            t->topologischSortieren();
+
             for(unsigned int i=0; i<=this->allBooking.Size()-1;i++)
             {
                 if(this->allBooking[i]->getTravelId() == t->getId()){
