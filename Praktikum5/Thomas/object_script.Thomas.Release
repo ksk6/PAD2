@@ -11,6 +11,8 @@ release/newbooking.o
 release/test.o
 release/node.o
 release/list.o
+release/algorithmen.o
+release/dataconverter.o
 release/moc_mainwindow.o
 release/moc_newbooking.o
 release/moc_test.o

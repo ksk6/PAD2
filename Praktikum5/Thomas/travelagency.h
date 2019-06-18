@@ -1,11 +1,12 @@
 #ifndef TRAVELAGENCY_H
 #define TRAVELAGENCY_H
 #include <fstream>
-
+#include <dataconverter.h>
 #include <customer.h>
 #include <flightbooking.h>
 #include <rentalcarreservation.h>
 #include <hotelbooking.h>
+#include <travel.h>
 #include <QString>
 #include <list.h>
 

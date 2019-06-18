@@ -38,7 +38,8 @@ SOURCES += \
     test.cpp \
     node.cpp \
     list.cpp \
-    algorithmen.cpp
+    algorithmen.cpp \
+    dataconverter.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     test.h \
     node.h \
     list.h \
-    graph.h
+    graph.h \
+    dataconverter.h
 
 FORMS += \
         mainwindow.ui \

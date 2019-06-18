@@ -11,6 +11,8 @@ debug/newbooking.o
 debug/test.o
 debug/node.o
 debug/list.o
+debug/algorithmen.o
+debug/dataconverter.o
 debug/moc_mainwindow.o
 debug/moc_newbooking.o
 debug/moc_test.o

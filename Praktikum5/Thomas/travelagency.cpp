@@ -123,20 +123,18 @@ bool TravelAgency::readFile()
         string s,s2;
         int counter = 1;
 
-        // Neuen Graph anlegen
         const int nBuchungen = 200;
-        Graph<FlightBooking, nBuchungen>* graph = new Graph<FlightBooking, nBuchungen>;
+        Graph<DataConverter*, nBuchungen>* graph = new Graph<DataConverter*, nBuchungen>;
 
         while(getline(quelle, s, '\n')){
             stringstream ss(s);
 
             vector<int> vorherigeBuchungen = {};
-            bool hasVorherigeBuchungen = false;
             unsigned int numNormalAttrs;
             switch (s.at(0)) {
                 case 'F': numNormalAttrs = 12; break;
                 case 'R': numNormalAttrs = 12; break;
-                case 'H': numNormalAttrs = 13; break;
+                case 'H': numNormalAttrs = 11; break;
                 default: throw runtime_error("Buchungsart ist nicht definiert");
             }
 
@@ -145,47 +143,63 @@ bool TravelAgency::readFile()
                 while(getline(ss, s2, '|')){
 
                     // Normale Attribute hinzufügen
-                    if(linedata.size() <= numNormalAttrs && s2 != ""){ linedata.push_back(s2); }
+                    if(linedata.size() < numNormalAttrs && s2 != ""){ linedata.push_back(s2); }
 
                     // Vorgaenger Buchungen hinzufügen
-                    else if(linedata.size() > numNormalAttrs){ hasVorherigeBuchungen = true; break; }
+                    else if(linedata.size() >= numNormalAttrs && s2 != ""){ vorherigeBuchungen.push_back(stoi(s2)); }
 
                     // Wenn ein normales Attribut leer ist
                     else{ throw runtime_error("Ein Attribut ist leer"); }
                 }
 
-                // Vorgaenger Buchungen hinzufügen
-                if(hasVorherigeBuchungen){
-                    while(getline(ss, s2, '|')){
-                        if(s2 == ""){ break; }
-                        vorherigeBuchungen.push_back(stoi(s2));
-                    }
+                // Neuen Graph anlegen, da neue Reise gestartet wurde
+                if(vorherigeBuchungen.size() == 0){
+                    delete graph;
+                    Graph<DataConverter*, nBuchungen>* graph = new Graph<DataConverter*, nBuchungen>;
                 }
 
                 if(s.at(0) == 'F')
                 {
-                    FlightBooking* f = new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                    numberOfFlights++;
+                    FlightBooking* data = new FlightBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
                                                         linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8),
                                                         linedata.at(9), linedata.at(10), linedata.at(11).at(0), vorherigeBuchungen);
+                    this->allBooking.InsertNode(data);
+                    graph->insertVertex(data->getId(), new DataConverter(data));
 
-                    numberOfFlights++;
-                    this->allBooking.InsertNode(f);
-                    graph->insertVertex(f->getId(), *f);
+                    if(vorherigeBuchungen.size() > 0){
+                        for(int id : vorherigeBuchungen){ graph->insertArc(data->getId(), id); }
+                    }
                 }
                 else if(s.at(0) == 'R')
                 {
                     numberOfRentalCarReservation++;
-                    this->allBooking.InsertNode(new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
-                                                                         linedata.at(3), linedata.at(4), stol(linedata.at(5)),
-                                                                         linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11),
-                                                                         vorherigeBuchungen));
-                }else if(s.at(0) == 'H')
+                    RentalCarReservation* data = new RentalCarReservation(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                                       linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                                       linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11),
+                                                                       vorherigeBuchungen);
+                    this->allBooking.InsertNode(data);
+                    graph->insertVertex(data->getId(), new DataConverter(data));
+
+                    if(vorherigeBuchungen.size() > 0){
+                        for(int id : vorherigeBuchungen){
+                            graph->insertArc(data->getId(), id);
+                        }
+                    }
+                }
+                else
                 {
                     numberOfHotelBookings++;
-                    this->allBooking.InsertNode(new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
-                                                                 linedata.at(3), linedata.at(4), stol(linedata.at(5)),
-                                                                 linedata.at(8), linedata.at(9), stoi(linedata.at(10)),
-                                                                 vorherigeBuchungen));
+                    HotelBooking* data = new HotelBooking(stol(linedata.at(1).c_str()), stod(linedata.at(2).c_str()),
+                                                          linedata.at(3), linedata.at(4), stol(linedata.at(5)),
+                                                          linedata.at(8), linedata.at(9), stoi(linedata.at(10)),
+                                                          vorherigeBuchungen);
+                    this->allBooking.InsertNode(data);
+                    graph->insertVertex(data->getId(), new DataConverter(data));
+
+                    if(vorherigeBuchungen.size() > 0){
+                        for(int id : vorherigeBuchungen){ graph->insertArc(data->getId(), id); }
+                    }
                 }
 
                 //Überprüfe ob Customer vorhanden
@@ -219,7 +233,8 @@ bool TravelAgency::readFile()
                 }
 
                 if(travelExists == false){
-                    this->allTravels.push_back(new Travel(stol(linedata.at(5)), stol(linedata.at(6))));
+                    Travel* _trav = new Travel(stol(linedata.at(5)), stol(linedata.at(6)), graph);
+                    this->allTravels.push_back(_trav);
                     trav = *this->allTravels.at(this->allTravels.size()-1);
                 }
                 counter++;
