@@ -10,7 +10,7 @@ class Travel
 {
 public:
     Travel();
-    Travel(long tid, long cid, Graph<DataConverter*, 200>* g);
+    Travel(long tid, long cid);
     void addBooking(Booking* booking);
 
     // Getter
@@ -24,6 +24,8 @@ public:
     void setId(long value);
     void setTravelBookings(const vector<Booking *> &value);
     void setGraph(Graph<DataConverter*, 200>* g);
+
+    void addKnoten(int dataID, DataConverter* data, vector<int> vorherigeBuchungen);
 
 private:
     long id, customerID;

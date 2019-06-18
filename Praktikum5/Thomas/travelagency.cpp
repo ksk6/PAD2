@@ -123,9 +123,6 @@ bool TravelAgency::readFile()
         string s,s2;
         int counter = 1;
 
-        const int nBuchungen = 200;
-        Graph<DataConverter*, nBuchungen>* graph = new Graph<DataConverter*, nBuchungen>;
-
         while(getline(quelle, s, '\n')){
             stringstream ss(s);
 
@@ -152,12 +149,8 @@ bool TravelAgency::readFile()
                     else{ throw runtime_error("Ein Attribut ist leer"); }
                 }
 
-                // Neuen Graph anlegen, da neue Reise gestartet wurde
-                if(vorherigeBuchungen.size() == 0){
-                    delete graph;
-                    Graph<DataConverter*, nBuchungen>* graph = new Graph<DataConverter*, nBuchungen>;
-                }
-
+                DataConverter* ddata;
+                int dataID;
                 if(s.at(0) == 'F')
                 {
                     numberOfFlights++;
@@ -165,11 +158,8 @@ bool TravelAgency::readFile()
                                                         linedata.at(3), linedata.at(4), stol(linedata.at(5)), linedata.at(8),
                                                         linedata.at(9), linedata.at(10), linedata.at(11).at(0), vorherigeBuchungen);
                     this->allBooking.InsertNode(data);
-                    graph->insertVertex(data->getId(), new DataConverter(data));
-
-                    if(vorherigeBuchungen.size() > 0){
-                        for(int id : vorherigeBuchungen){ graph->insertArc(data->getId(), id); }
-                    }
+                    dataID = data->getId();
+                    ddata = new DataConverter(data);
                 }
                 else if(s.at(0) == 'R')
                 {
@@ -179,13 +169,8 @@ bool TravelAgency::readFile()
                                                                        linedata.at(8), linedata.at(9), linedata.at(10), linedata.at(11),
                                                                        vorherigeBuchungen);
                     this->allBooking.InsertNode(data);
-                    graph->insertVertex(data->getId(), new DataConverter(data));
-
-                    if(vorherigeBuchungen.size() > 0){
-                        for(int id : vorherigeBuchungen){
-                            graph->insertArc(data->getId(), id);
-                        }
-                    }
+                    dataID = data->getId();
+                    ddata = new DataConverter(data);
                 }
                 else
                 {
@@ -195,11 +180,8 @@ bool TravelAgency::readFile()
                                                           linedata.at(8), linedata.at(9), stoi(linedata.at(10)),
                                                           vorherigeBuchungen);
                     this->allBooking.InsertNode(data);
-                    graph->insertVertex(data->getId(), new DataConverter(data));
-
-                    if(vorherigeBuchungen.size() > 0){
-                        for(int id : vorherigeBuchungen){ graph->insertArc(data->getId(), id); }
-                    }
+                    dataID = data->getId();
+                    ddata = new DataConverter(data);
                 }
 
                 //Überprüfe ob Customer vorhanden
@@ -218,10 +200,8 @@ bool TravelAgency::readFile()
                     this->allCustomers.push_back(new Customer(stol(linedata.at(6)), linedata.at(7)));
                 }
 
-
+                //Überprüfe ob Travel vorhanden
                 Travel trav;
-
-                //Überprüfe ob Customer vorhanden
                 bool travelExists = false;
                 for(Travel *t : this->allTravels)
                 {
@@ -233,11 +213,13 @@ bool TravelAgency::readFile()
                 }
 
                 if(travelExists == false){
-                    Travel* _trav = new Travel(stol(linedata.at(5)), stol(linedata.at(6)), graph);
-                    this->allTravels.push_back(_trav);
+                    this->allTravels.push_back(new Travel(stol(linedata.at(5)), stol(linedata.at(6))));
                     trav = *this->allTravels.at(this->allTravels.size()-1);
                 }
                 counter++;
+
+                trav.addKnoten(dataID, ddata, vorherigeBuchungen);
+
             } catch(const std::exception& e){
                 for(unsigned int i = 0; i<this->allBooking.Size()-1; i++)
                 {

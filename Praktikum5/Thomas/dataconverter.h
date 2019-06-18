@@ -11,6 +11,7 @@ enum BookingArt{
 class DataConverter
 {
 public:
+    DataConverter();
     DataConverter(FlightBooking* data);
     DataConverter(HotelBooking* data);
     DataConverter(RentalCarReservation* data);

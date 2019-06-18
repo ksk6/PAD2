@@ -99,6 +99,7 @@ void Graph<TV, maxNodes>::insertVertex(int n, TV m) {
     if (n >= 0 && n < maxNodes) {
         vertices[n].living = true;
         vertices[n].value = m;
+        numVertices = 1;
     }
 }
 
@@ -247,6 +248,7 @@ void Graph<TV, maxNodes>::insertArc(int v, int w, double weight) {
         vertices[v].ord++;
         vertices[w].indegree++;
         vertices[w].ord++;
+        numArcs++;
     }
 }
 
