@@ -1,0 +1,27 @@
+FRA|Flughafen Frankfurt|50.033333|8.570556
+ORD|Chicago O’Hare International Airport|41.978603|-87.904842
+STR|Flughafen Stuttgart|48.689878|9.221964
+CDG|Aéroport Paris-Charles de Gaulle|49.009722|2.547778
+HAM|Flughafen Hamburg|53.630278|9.988333
+MUC|Flughafen München|48.353783|11.786086
+BCN|Aeropuerto de Barcelona-El Prat|41.297078|2.078464
+WAW|Lotnisko Chopina w Warszawie|52.16575|20.967122
+GRU|Aeroporto Internacional de São Paulo/Guarulhos|-23.432075|-46.469511
+POA|Aeroporto Internacional Salgado Filho|-29.994444|-51.171389
+DEL|Indira Gandhi International Airport Delhi|28.5665|77.103089
+BLR|Bengaluru International Airport|13.198889|77.705556
+SIN|Singapore Changi Airport|1.350189|103.994433
+HND|Tokyo Haneda Kuko|35.552258|139.779694
+VIE|Flughafen Wien-Schwechat|48.110833|16.570833
+MHG|City-Airport Mannheim|49.472706|8.514264
+AAR|Aarhus Lufthavn|56.3|10.618889
+TXL|Flughafen Berlin-Tegel|52.559686|13.287711
+SFO|San Francisco International Airport|37.618972|-122.374889
+PHL|Philadelphia International Airport|39.871944|-75.241139
+YUL|Aéroport International Pierre-Elliott-Trudeau de Montréal|45.47175|-73.736569
+SAN|San Diego International Airport|32.733556|-117.189667
+LAX|Los Angeles International Airport|33.942536|-118.408075
+PVG|Shànghai Pudong Guójì Jichang|31.143378|121.805214
+PHX|Phoenix Sky Harbor International Airport|33.434278|-112.011583
+LAS|McCarran International Airport Las Vegas|36.080056|-115.15225
+GOT|Göteborg-Landvetter Airport|57.668799|12.292314
